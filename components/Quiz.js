@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { gray1, gray3, gray4 } from '../utils/colors';
 
-class DeckItem extends Component {
+class Quiz extends Component {
   render() {
     const { title, cardsCount, navigate } = this.props;
     return (
@@ -15,12 +15,12 @@ class DeckItem extends Component {
   }
 }
 
-DeckItem.propTypes = {
+Quiz.propTypes = {
   title: PropTypes.string,
   cardsCount: PropTypes.number
 };
 
-export default DeckItem;
+export default Quiz;
 
 const styles = StyleSheet.create({
   item: {

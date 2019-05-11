@@ -1,60 +1,54 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
+import { StyleSheet, Text, View } from 'react-native';
+import { gray1, gray3, gray4 } from '../utils/colors';
+import Fab from './Fab';
+import TextButton from './TextButton';
 
-import { purple, red } from "../utils/colors";
-import { getDecks } from '../actions/index.actions'
-
-class DecksList extends Component {
-  state = {
-    text: '',
-  };
-
+class DeckDetail extends Component {
   render() {
-
+    const { navigation } = this.props;
+    const deck = navigation.state.params.deck;
     return (
-      <View style={{flex: 1}}>
-        <Text>Add your new deck title</Text>
-        <TextInput
-          style={{ borderWidth: 1, borderColor: purple, borderRadius: 5, minHeigth: 40, padding: 6}}
-          placeholder="Deck title"
-          multiline={true}
-          onChangeText={(text) => this.setState({text})}/>
+      <View style={styles.item}>
+        <View style={{ flex: 2 }}>
+          <Text style={styles.itemTitle}>{deck.title}</Text>
+          <Text style={styles.itemCardsCount}>{deck.questions.length} Cards</Text>
+        </View>
+        <View style={{ flex: 1 }}>
+          <TextButton children='START QUIZ' style={{ fontSize: 20 }} onPress={() => {}}/>
+        </View>
+        <Fab onPress={() => navigation.navigate('AddCard', { deck })}/>
       </View>
     );
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    decks: state.decks
-  }
-}
+DeckDetail.propTypes = {
+  title: PropTypes.string,
+  cardsCount: PropTypes.number
+};
 
-function mapDispatchToProps (dispatch ) {
-  return {
-    getDecks: bindActionCreators(getDecks, dispatch)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DecksList);
+export default DeckDetail;
 
 const styles = StyleSheet.create({
-  fab: {
-    borderWidth:1,
-    borderColor:'rgba(0,0,0,0.2)',
-    alignItems:'center',
-    justifyContent:'center',
-    width:70,
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    height:70,
-    backgroundColor: red,
-    borderRadius:100,
+  item: {
+    flex: 1,
+    backgroundColor: gray1,
+    borderRadius: 5,
+    margin: 10,
+    alignItems: 'center',
+  },
+  itemTitle: {
+    color: gray4,
+    fontSize: 50,
+    textAlign: 'center',
+    marginTop: 50
+  },
+  itemCardsCount: {
+    color: gray3,
+    fontSize: 15,
+    textAlign: 'center',
+    marginBottom: 10
   }
 });

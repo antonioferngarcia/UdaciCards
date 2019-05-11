@@ -47,9 +47,9 @@ function reducer (state = store, action) {
         ...state,
         decks: {
           ...state.decks,
-          [action.deck.title] : {
-            ...state.decks[action.deck.title],
-            questions: state.decks[action.deck.title].questions.concat([action.card])
+          [action.deckTitle] : {
+            ...state.decks[action.deckTitle],
+            questions: state.decks[action.deckTitle].questions.concat([action.card])
           }
         }
       };

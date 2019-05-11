@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppLoading } from "expo";
 
-import { red, white } from "../utils/colors";
 import DeckItem from './DeckItem';
 import { getDecks } from '../actions/index.actions'
+import Fab from './Fab';
 
 class DecksList extends Component {
   state = {
@@ -20,9 +19,15 @@ class DecksList extends Component {
     this.setState(() => ({ready: true}))
   }
 
+  renderItem = ({ item, index }) =>
+    <DeckItem
+      key={index}
+      title={item.title}
+      cardsCount={item.questions.length}
+      navigate={() => this.props.navigation.navigate('DeckDetail',{ deck: item })}/>;
 
   render() {
-    const { decks } = this.props;
+    const { decks, navigation } = this.props;
     const { ready } = this.state;
 
     if (!ready) {
@@ -34,13 +39,8 @@ class DecksList extends Component {
         <FlatList
           data={Object.values(decks)}
           keyExtractor={(item, index) => `${index}-${item.title}`}
-          renderItem={({ item, index }) => <DeckItem key={index} title={item.title} cardsCount={item.questions.length}/> } />
-        <TouchableOpacity style={styles.fab} onPress={() => this.props.navigation.navigate(
-          'EntryDetail',
-          { entryId: 'key' }
-        )}>
-          <Entypo name='plus' color={white} size={35}/>
-        </TouchableOpacity>
+          renderItem={this.renderItem} />
+          <Fab onPress={() => navigation.navigate('AddDeck', { entryId: 'key' })}/>
       </View>
     );
   }
@@ -62,19 +62,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(DecksList);
-
-const styles = StyleSheet.create({
-  fab: {
-    borderWidth:1,
-    borderColor:'rgba(0,0,0,0.2)',
-    alignItems:'center',
-    justifyContent:'center',
-    width:70,
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
-    height:70,
-    backgroundColor: red,
-    borderRadius:100,
-  }
-});

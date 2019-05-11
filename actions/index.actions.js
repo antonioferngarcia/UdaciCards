@@ -18,18 +18,17 @@ export function addDeck (deck) {
   }
 }
 
-export function addCard (card) {
+export function addCard (card, deckTitle) {
   return {
     type: ADD_CARD,
     card,
+    deckTitle
   }
 }
 
 export function getDecks () {
   return (dispatch) => {
     fetchDecks()
-      .then((decks) => dispatch(receiveDecks(decks)))
-      // .then((decks) => console.log(decks))
-      // .then(() => this.setState(() => ({ready: true})))
+      .then((decks) => dispatch(receiveDecks(decks)));
   }
 }
