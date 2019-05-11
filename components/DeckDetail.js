@@ -4,11 +4,12 @@ import { StyleSheet, Text, View } from 'react-native';
 import { gray1, gray3, gray4 } from '../utils/colors';
 import Fab from './Fab';
 import TextButton from './TextButton';
+import { connect } from 'react-redux';
 
 class DeckDetail extends Component {
   render() {
-    const { navigation } = this.props;
-    const deck = navigation.state.params.deck;
+    const { navigation, deck } = this.props;
+
     return (
       <View style={styles.item}>
         <View style={{ flex: 2 }}>
@@ -25,11 +26,19 @@ class DeckDetail extends Component {
 }
 
 DeckDetail.propTypes = {
+  deck: PropTypes.object,
   title: PropTypes.string,
   cardsCount: PropTypes.number
 };
 
-export default DeckDetail;
+
+function mapStateToProps (state, props) {
+  return {
+    deck: state.decks[props.navigation.state.params.deckTitle]
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetail);
 
 const styles = StyleSheet.create({
   item: {

@@ -28,7 +28,7 @@ export const MainNavigator = createAppContainer(createStackNavigator({
   DeckDetail: {
     screen: DeckDetail,
     navigationOptions: ({ navigation }) => ({
-      title: navigation.state.params.deck.title,
+      title: navigation.state.params.deckTitle,
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,

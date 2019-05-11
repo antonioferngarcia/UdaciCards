@@ -10,11 +10,10 @@ class AddCard extends Component {
   state = { question: '', answer: '' };
 
   saveCard = () => {
-    const { navigation } = this.props;
-    const { question, answer, addCard } = this.state;
+    const { navigation, addCard } = this.props;
+    const { question, answer } = this.state;
 
-    debugger;
-    addCard({ question, answer });
+    addCard({ question, answer }, navigation.state.params.deck.title);
     navigation.goBack();
   };
 
@@ -48,8 +47,8 @@ class AddCard extends Component {
 }
 
 AddCard.propTypes = {
-  // title: PropTypes.string,
-  // cardsCount: PropTypes.number
+  navigation: PropTypes.object,
+  addCard: PropTypes.func
 };
 
 function mapDispatchToProps (dispatch ) {

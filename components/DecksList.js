@@ -24,7 +24,7 @@ class DecksList extends Component {
       key={index}
       title={item.title}
       cardsCount={item.questions.length}
-      navigate={() => this.props.navigation.navigate('DeckDetail',{ deck: item })}/>;
+      navigate={() => this.props.navigation.navigate('DeckDetail',{ deckTitle: item.title })}/>;
 
   render() {
     const { decks, navigation } = this.props;

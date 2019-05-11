@@ -3,9 +3,9 @@ import { KeyboardAvoidingView, View, Text, StyleSheet, TextInput, FlatList } fro
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { purple, red } from "../utils/colors";
+import { purple } from "../utils/colors";
 import Fab from './Fab';
-import { addDeck } from '../actions/index.actions';
+import { addCard } from '../actions/index.actions';
 
 class AddDeck extends Component {
   state = {
@@ -41,7 +41,7 @@ class AddDeck extends Component {
 
 function mapDispatchToProps (dispatch ) {
   return {
-    addDeck: bindActionCreators(addDeck, dispatch)
+    addCard: bindActionCreators(addCard, dispatch)
   }
 }
 
