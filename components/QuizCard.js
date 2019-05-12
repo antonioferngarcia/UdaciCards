@@ -46,9 +46,9 @@ class Quiz extends Component {
       <View style={styles.item}>
         <View style={{ flex: 2 }}>
           <Text>{currentQuestion}/{totalQuestions}</Text>
-          <View style={styles.directionContainer}>
+          <View style={styles.questionContainer}>
             <Animated.Text
-              style={[styles.direction, {transform: [{scale: bounceValue}]}]}>
+              style={[styles.question, {transform: [{scale: bounceValue}]}]}>
               {showingQuestion ? quiz.questions[currentQuestion].question : quiz.questions[currentQuestion].answer}
             </Animated.Text>
           </View>
@@ -98,7 +98,7 @@ function mapDispatchToProps (dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
 
 const styles = StyleSheet.create({
-  directionContainer: {
+  questionContainer: {
     flex: 1,
     justifyContent: 'center',
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     textAlign: 'center',
   },
-  direction: {
+  question: {
     color: purple,
     fontSize: 40,
     marginTop: 40,

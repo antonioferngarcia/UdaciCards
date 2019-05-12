@@ -20,6 +20,13 @@ class DeckDetail extends Component {
     navigation.navigate('Quiz', { deckTitle: deck.title });
   };
 
+  renderStartQuizButton = () => {
+    const { deck } = this.props;
+    if(deck.questions.length > 0){
+      return <TextButton children='START QUIZ' style={{ fontSize: 20 }} onPress={this.goToQuiz}/>;
+    }
+  };
+
   render() {
     const { navigation, deck } = this.props;
 
@@ -30,7 +37,7 @@ class DeckDetail extends Component {
           <Text style={styles.itemCardsCount}>{deck.questions.length} Cards</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <TextButton children='START QUIZ' style={{ fontSize: 20 }} onPress={this.goToQuiz}/>
+          {this.renderStartQuizButton()}
         </View>
         <Fab onPress={() => navigation.navigate('AddCard', { deck })}/>
       </View>

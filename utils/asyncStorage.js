@@ -36,3 +36,9 @@ function setDummyData () {
 export function formatResults (results) {
   return results === null ? setDummyData() : JSON.parse(results);
 }
+
+export async function getItemByKey(key) {
+  const decks = await AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(formatResults);
+  return  decks[key]
+}

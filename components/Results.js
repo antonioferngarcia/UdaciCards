@@ -11,7 +11,7 @@ class Results extends Component {
     const { correctAnswers, incorrectAnswers, totalQuestions } = this.props;
     return (
         <View style={{ flex: 1 }}>
-          <Text style={styles.percentage}>Score: {(correctAnswers/totalQuestions*100)}%</Text>
+          <Text style={styles.percentage}>Score: {(correctAnswers/totalQuestions*100).toFixed(0)}%</Text>
           <Text style={styles.stats}>Total questions: {totalQuestions}</Text>
           <Text style={styles.stats}>Correct answers: {correctAnswers}</Text>
           <Text style={styles.stats}>Incorrect answers: {incorrectAnswers}</Text>

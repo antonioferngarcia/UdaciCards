@@ -4,16 +4,16 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, View, Button } from 'react-native';
 import { purple } from '../utils/colors';
-import { addCard } from '../actions/index.actions';
+import { createCard } from '../actions/index.actions';
 
 class AddCard extends Component {
   state = { question: '', answer: '' };
 
   saveCard = () => {
-    const { navigation, addCard } = this.props;
+    const { navigation, createCard } = this.props;
     const { question, answer } = this.state;
 
-    addCard({ question, answer }, navigation.state.params.deck.title);
+    createCard({ question, answer }, navigation.state.params.deck.title);
     navigation.goBack();
   };
 
@@ -48,12 +48,12 @@ class AddCard extends Component {
 
 AddCard.propTypes = {
   navigation: PropTypes.object,
-  addCard: PropTypes.func
+  createCard: PropTypes.func
 };
 
 function mapDispatchToProps (dispatch ) {
   return {
-    addCard: bindActionCreators(addCard, dispatch)
+    createCard: bindActionCreators(createCard, dispatch)
   }
 }
 

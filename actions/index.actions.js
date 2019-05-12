@@ -1,4 +1,4 @@
-import { fetchDecks } from '../utils/api';
+import { fetchDecks, submitCard, submitDeck } from '../utils/api';
 
 export const RECEIVE_DECKS = 'RECEIVE_DECKS';
 export const ADD_DECK = 'ADD_DECK';
@@ -13,14 +13,14 @@ export function receiveDecks (decks) {
   }
 }
 
-export function addDeck (deck) {
+function addDeck (deck) {
   return {
     type: ADD_DECK,
     deck,
   }
 }
 
-export function addCard (card, deckTitle) {
+function addCard (card, deckTitle) {
   return {
     type: ADD_CARD,
     card,
@@ -39,6 +39,20 @@ export function addQuizAnswer (answer) {
   return {
     type: ADD_ANSWER,
     answer
+  }
+}
+
+export function createCard (card, deckTitle) {
+  return async (dispatch) => {
+    await submitCard(deckTitle, card);
+    dispatch(addCard(card, deckTitle));
+  }
+}
+
+export function createDeck (deck) {
+  return (dispatch) => {
+    submitDeck(deck.title, deck);
+    dispatch(addDeck(deck));
   }
 }
 

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 
 import { purple } from "../utils/colors";
 import Fab from './Fab';
-import { addDeck } from '../actions/index.actions';
+import { createDeck } from '../actions/index.actions';
 
 class AddDeck extends Component {
   state = {
@@ -13,10 +13,10 @@ class AddDeck extends Component {
   };
 
   saveDeck = () => {
-    const {navigation, addDeck} = this.props;
+    const {navigation, createDeck} = this.props;
     const {text} = this.state;
 
-    addDeck({ title: text, questions: [] });
+    createDeck({ title: text, questions: [] });
     navigation.navigate('home');
   };
 
@@ -41,7 +41,7 @@ class AddDeck extends Component {
 
 function mapDispatchToProps (dispatch ) {
   return {
-    addDeck: bindActionCreators(addDeck, dispatch)
+    createDeck: bindActionCreators(createDeck, dispatch)
   }
 }
 
