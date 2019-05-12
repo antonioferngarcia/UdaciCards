@@ -42,6 +42,12 @@ export function addQuizAnswer (answer) {
   }
 }
 
+export function restartQuiz () {
+  return async (dispatch) => {
+    dispatch(addQuizAnswer({correctAnswers: 0, currentQuestion: 0, incorrectAnswers: 0}));
+  }
+}
+
 export function createCard (card, deckTitle) {
   return async (dispatch) => {
     await submitCard(deckTitle, card);

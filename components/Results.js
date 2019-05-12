@@ -4,17 +4,27 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { gray2, purple } from '../utils/colors';
+import TextButton from './TextButton';
+import { restartQuiz } from '../actions/index.actions';
+import { bindActionCreators } from 'redux';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 class Results extends Component {
 
+  componentDidMount() {
+    clearLocalNotification()
+      .then(setLocalNotification());
+  }
+
   render() {
-    const { correctAnswers, incorrectAnswers, totalQuestions } = this.props;
+    const { correctAnswers, incorrectAnswers, totalQuestions, restartQuiz } = this.props;
     return (
         <View style={{ flex: 1 }}>
           <Text style={styles.percentage}>Score: {(correctAnswers/totalQuestions*100).toFixed(0)}%</Text>
           <Text style={styles.stats}>Total questions: {totalQuestions}</Text>
           <Text style={styles.stats}>Correct answers: {correctAnswers}</Text>
           <Text style={styles.stats}>Incorrect answers: {incorrectAnswers}</Text>
+          <TextButton children='RESTART QUIZ' style={styles.restart} onPress={restartQuiz}/>
         </View>
     );
   }
@@ -24,7 +34,6 @@ Results.propTypes = {
   title: PropTypes.string,
   cardsCount: PropTypes.number
 };
-
 
 function mapStateToProps (state) {
   return {
@@ -36,7 +45,13 @@ function mapStateToProps (state) {
   }
 }
 
-export default connect(mapStateToProps)(Results);
+function mapDispatchToProps (dispatch ) {
+  return {
+    restartQuiz: bindActionCreators(restartQuiz, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Results);
 
 const styles = StyleSheet.create({
   percentage: {
@@ -54,4 +69,5 @@ const styles = StyleSheet.create({
   item: {
     flex: 1
   },
+  restart: { fontSize: 20, paddingTop: 80 }
 });

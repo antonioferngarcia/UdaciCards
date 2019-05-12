@@ -9,10 +9,13 @@ import reducer from './reducers/index.reducer';
 import { purple } from './utils/colors'
 import { MainNavigator } from './navigation/MainNavigator';
 import UdaciStatusBar from './components/UdaciStatusBar';
+import { setLocalNotification } from './utils/helpers';
 
 export default class App extends Component {
 
+
   componentDidMount() {
+    setLocalNotification();
   }
 
   store = createStore(reducer, applyMiddleware(thunk));
