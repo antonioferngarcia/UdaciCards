@@ -1,12 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 import { gray1, gray3, gray4 } from '../utils/colors';
 import Fab from './Fab';
 import TextButton from './TextButton';
-import { connect } from 'react-redux';
+import { addQuiz } from '../actions/index.actions';
 
 class DeckDetail extends Component {
+
+  goToQuiz = () => {
+    const { navigation, addQuiz, deck } = this.props;
+    addQuiz(Object.assign({
+      currentQuestion: 0,
+      correctAnswers: 0,
+      incorrectAnswers: 0
+    }, deck));
+    navigation.navigate('Quiz', { deckTitle: deck.title });
+  };
+
   render() {
     const { navigation, deck } = this.props;
 
@@ -17,7 +30,7 @@ class DeckDetail extends Component {
           <Text style={styles.itemCardsCount}>{deck.questions.length} Cards</Text>
         </View>
         <View style={{ flex: 1 }}>
-          <TextButton children='START QUIZ' style={{ fontSize: 20 }} onPress={() => {}}/>
+          <TextButton children='START QUIZ' style={{ fontSize: 20 }} onPress={this.goToQuiz}/>
         </View>
         <Fab onPress={() => navigation.navigate('AddCard', { deck })}/>
       </View>
@@ -38,7 +51,13 @@ function mapStateToProps (state, props) {
   }
 }
 
-export default connect(mapStateToProps)(DeckDetail);
+function mapDispatchToProps (dispatch ) {
+  return {
+    addQuiz: bindActionCreators(addQuiz, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckDetail);
 
 const styles = StyleSheet.create({
   item: {

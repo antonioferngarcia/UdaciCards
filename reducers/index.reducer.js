@@ -1,30 +1,8 @@
-import { ADD_CARD, ADD_DECK, RECEIVE_DECKS } from '../actions/index.actions';
+import { ADD_ANSWER, ADD_CARD, ADD_DECK, ADD_QUIZ, RECEIVE_DECKS } from '../actions/index.actions';
 
 const store = {
-  decks: {
-    React: {
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    JavaScript: {
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
-    }
-  }
+  decks: {},
+  quiz: {}
 };
 
 function reducer (state = store, action) {
@@ -32,7 +10,7 @@ function reducer (state = store, action) {
     case RECEIVE_DECKS :
       return {
         ...state,
-        ...action.decks,
+        decks: action.decks,
       };
     case ADD_DECK :
       return {
@@ -51,6 +29,19 @@ function reducer (state = store, action) {
             ...state.decks[action.deckTitle],
             questions: state.decks[action.deckTitle].questions.concat([action.card])
           }
+        }
+      };
+    case ADD_QUIZ:
+      return {
+        ...state,
+        quiz: action.quiz
+      };
+    case ADD_ANSWER:
+      return {
+        ...state,
+        quiz: {
+          ...state.quiz,
+          ...action.answer
         }
       };
     default :

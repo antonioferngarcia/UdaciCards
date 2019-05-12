@@ -1,49 +1,19 @@
 import { AsyncStorage } from 'react-native'
-import { CALENDAR_STORAGE_KEY } from './_calendar'
+import { DECKS_STORAGE_KEY, formatResults } from './asyncStorage'
 
 export function fetchDecks ( ){
-  // return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-  //   .then(formatCalendarResults);
-  return new Promise(resolve => {
-    resolve({
-      React: {
-        title: 'React',
-        questions: [
-          {
-            question: 'What is React?',
-            answer: 'A library for managing user interfaces'
-          },
-          {
-            question: 'Where do you make Ajax requests in React?',
-            answer: 'The componentDidMount lifecycle event'
-          }
-        ]
-      },
-      JavaScript: {
-        title: 'JavaScript',
-        questions: [
-          {
-            question: 'What is a closure?',
-            answer: 'The combination of a function and the lexical environment within which that function was declared.'
-          }
-        ]
-      }
-    })
-  });
+  return AsyncStorage.getItem(DECKS_STORAGE_KEY)
+    .then(formatResults);
 }
 
-export function submitEntry ({ entry, key }) {
-  return AsyncStorage.mergeItem(CALENDAR_STORAGE_KEY, JSON.stringify({
-    [key]: entry
+export function submitDeck ({ deck, key }) {
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+    [key]: deck
   }));
 }
 
-export function removeEntry (key) {
-  return AsyncStorage.getItem(CALENDAR_STORAGE_KEY)
-    .then((results) => {
-      const data = JSON.parse(results);
-      data[key] = undefined;
-      delete data[key];
-      AsyncStorage.setItem(CALENDAR_STORAGE_KEY, JSON.stringify(data));
-    })
+export function submitCard ({ entry, key }) {
+  return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
+    [key]: entry
+  }));
 }

@@ -37,7 +37,7 @@ export const MainNavigator = createAppContainer(createStackNavigator({
   },
   AddCard: {
     screen: AddCard,
-    navigationOptions: ({ navigation }) => ({
+    navigationOptions: () => ({
       title: 'Add new card',
       headerTintColor: white,
       headerStyle: {
@@ -48,11 +48,11 @@ export const MainNavigator = createAppContainer(createStackNavigator({
   Quiz: {
     screen: Quiz,
     navigationOptions: ({ navigation }) => ({
-      title: 'Quiz',
+      title: `Quiz: ${navigation.state.params.deckTitle}`,
       headerTintColor: white,
       headerStyle: {
         backgroundColor: purple,
       },
     }),
-  },
+  }
 }));

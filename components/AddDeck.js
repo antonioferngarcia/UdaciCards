@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, View, Text, StyleSheet, TextInput, FlatList } from 'react-native';
+import { KeyboardAvoidingView, View, Text, StyleSheet, TextInput } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { purple } from "../utils/colors";
 import Fab from './Fab';
-import { addCard } from '../actions/index.actions';
+import { addDeck } from '../actions/index.actions';
 
 class AddDeck extends Component {
   state = {
@@ -41,7 +41,7 @@ class AddDeck extends Component {
 
 function mapDispatchToProps (dispatch ) {
   return {
-    addCard: bindActionCreators(addCard, dispatch)
+    addDeck: bindActionCreators(addDeck, dispatch)
   }
 }
 

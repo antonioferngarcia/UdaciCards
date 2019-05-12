@@ -25,7 +25,7 @@ export default Fab;
 const styles = StyleSheet.create({
   fab: {
     borderWidth:1,
-    borderColor:'rgba(0,0,0,0.2)',
+    borderColor: red,
     alignItems:'center',
     justifyContent:'center',
     width:70,
