@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View } from 'react-native';
-import { gray1, gray3, gray4 } from '../utils/colors';
-import Fab from './Fab';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { gray1, gray3, gray4, red } from '../utils/colors';
 import TextButton from './TextButton';
 import { addQuiz } from '../actions/index.actions';
 
@@ -39,7 +38,10 @@ class DeckDetail extends Component {
         <View style={{ flex: 1 }}>
           {this.renderStartQuizButton()}
         </View>
-        <Fab onPress={() => navigation.navigate('AddCard', { deck })}/>
+        <Button
+          onPress={() => navigation.navigate('AddCard', { deck })}
+          title="Add new card"
+          color={red} />
       </View>
     );
   }

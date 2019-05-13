@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, FlatList } from 'react-native';
+import { View, FlatList, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AppLoading } from "expo";
 
 import DeckItem from './DeckItem';
 import { getDecks } from '../actions/index.actions'
-import Fab from './Fab';
+import { red } from '../utils/colors';
 
 class DecksList extends Component {
   state = {
@@ -40,7 +40,10 @@ class DecksList extends Component {
           data={Object.values(decks)}
           keyExtractor={(item, index) => `${index}-${item.title}`}
           renderItem={this.renderItem} />
-          <Fab onPress={() => navigation.navigate('AddDeck', { entryId: 'key' })}/>
+        <Button
+          onPress={() => navigation.navigate('AddDeck', { entryId: 'key' })}
+          title="Create deck"
+          color={red} />
       </View>
     );
   }
