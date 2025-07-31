@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { AppLoading } from "expo";
+import AppLoading from 'expo-app-loading';
 
 import DeckItem from './DeckItem';
 import { getDecks } from '../actions/index.actions'
