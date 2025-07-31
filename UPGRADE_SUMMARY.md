@@ -105,7 +105,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 - Removed deprecated `sdkVersion` and `privacy` fields
 - Added `userInterfaceStyle`, `bundleIdentifier`, `package`
 - Added `plugins` array for `expo-notifications`
-- Added web and Android adaptive icon support
+- Added web and Android adaptive icon support (using existing icon.png)
+- Fixed asset paths to use existing files
+
+### 🔧 **Asset Configuration Fixed**
+- Updated `android.adaptiveIcon.foregroundImage` to use existing `./assets/images/icon.png`
+- Updated `web.favicon` to use existing `./assets/images/icon.png`
 
 ### 🎯 **Navigation Parameter Updates**
 - `navigation.state.params` → `route.params`
