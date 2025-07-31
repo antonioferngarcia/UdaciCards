@@ -1,56 +1,60 @@
 import React from 'react';
-import { AsyncStorage  } from 'react-native';
-import { Notifications, Permissions } from 'expo'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
 const NOTIFICATION_KEY = 'notifications.storage.key';
+
+// Configure notification behavior
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)
 }
 
-export function setLocalNotification () {
-  AsyncStorage.getItem(NOTIFICATION_KEY)
-    .then(JSON.parse)
-    .then((data) => {
-      if (data === null) {
-        Permissions.askAsync(Permissions.NOTIFICATIONS)
-          .then(({ status }) => {
-            if (status === 'granted') {
-              Notifications.cancelAllScheduledNotificationsAsync();
+export async function setLocalNotification () {
+  try {
+    const data = await AsyncStorage.getItem(NOTIFICATION_KEY);
+    const parsedData = JSON.parse(data);
+    
+    if (parsedData === null) {
+      const { status } = await Notifications.requestPermissionsAsync();
+      
+      if (status === 'granted') {
+        await Notifications.cancelAllScheduledNotificationsAsync();
 
-              let tomorrow = new Date();
-              tomorrow.setDate(tomorrow.getDate() + 1);
-              tomorrow.setHours(20);
-              tomorrow.setMinutes(0);
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(20);
+        tomorrow.setMinutes(0);
 
-              Notifications.scheduleLocalNotificationAsync(
-                createNotification(),
-                {
-                  time: tomorrow,
-                  repeat: 'day',
-                }
-              );
+        await Notifications.scheduleNotificationAsync({
+          content: createNotification(),
+          trigger: {
+            date: tomorrow,
+            repeats: true,
+          },
+        });
 
-              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
-            }
-          })
+        await AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
       }
-    })
+    }
+  } catch (error) {
+    console.log('Error setting notification:', error);
+  }
 }
 
 function createNotification () {
   return {
     title: 'You have some questions waiting for you!',
     body: "👋 You have some questions waiting for you!",
-    ios: {
-      sound: true,
-    },
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true,
-    }
+    sound: true,
+    priority: Notifications.AndroidNotificationPriority.HIGH,
   }
 }
