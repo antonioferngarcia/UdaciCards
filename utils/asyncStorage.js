@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const DECKS_STORAGE_KEY = 'decks:storage:key';
 
